@@ -19,7 +19,6 @@ public class OrbittingElement : MonoBehaviour
 
     private void Update()
     {
-
         Vector3 rotationVector = new Vector3(-axis.normalized.x, axis.normalized.y, axis.normalized.z);
         transform.RotateAround(center.position, rotationVector , rotationSpeed * Time.deltaTime);
         //Vector3 desiredPosition = (transform.position - center.position).normalized * radius + center.position;

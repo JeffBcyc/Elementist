@@ -2,7 +2,7 @@
 {
     Empty = 0,
     Fire = 1,
-    Eletric = 2,
+    Electric = 2,
     Ice = 3
 }
 

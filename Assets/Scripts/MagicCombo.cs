@@ -17,7 +17,7 @@ public class MagicCombo : MonoBehaviour
         
         foreach (var item in damageBook)
         {
-            print(item.Key + " : " + item.Value);            
+            //print(item.Key + " : " + item.Value);            
         }
     }
 
