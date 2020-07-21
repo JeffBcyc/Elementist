@@ -10,12 +10,19 @@ public class ElementAuro : MonoBehaviour
 
     private void Awake()
     {
-        followObject = FindObjectOfType<ThirdPersonCharacter>().transform;
+        //followObject = FindObjectOfType<Mage>().transform;
     }
 
     private void Update()
     {
-        this.transform.position = followObject.position + Vector3.up * 1.7f;
+
+        Vector3 auroPosition = new Vector3(
+            followObject.position.x,
+            1.7f,
+            followObject.position.z
+            );
+
+        this.transform.position = auroPosition;
     }
 
 }

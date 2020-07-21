@@ -44,7 +44,7 @@ Dictionary<MagicType, float> damageBook = new Dictionary<MagicType, float>();
         else if (Input.GetMouseButtonDown(1))
         {
             print("right");
-            player.Move(Vector3.zero, false);
+            //player.Move(Vector3.zero, false);
 
         }
     }
