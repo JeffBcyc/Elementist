@@ -2,26 +2,54 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityStandardAssets.Characters.ThirdPerson;
+using UnityEngine.UIElements;
 
 public class MagicCombo : MonoBehaviour
 {
 
     [SerializeField] ElementSlot[] elementSlots;
-    [SerializeField] int elmentDefaultDamage = 10;
+    [SerializeField] float elmentDefaultDamage = 10f;
 
-    Dictionary<MagicType, int> damageBook = new Dictionary<MagicType, int>();
 
-    private void Start()
+    ThirdPersonCharacter player;
+
+Dictionary<MagicType, float> damageBook = new Dictionary<MagicType, float>();
+
+    private void Awake()
+    {
+        player = FindObjectOfType<ThirdPersonCharacter>();
+    }
+
+    private void Update()
     {
         ReadElements(elementSlots, elmentDefaultDamage);
+
+        //foreach (var item in damageBook)
+        //{
+        //    //print(item.Key + " : " + item.Value);            
+        //}
+
         
-        foreach (var item in damageBook)
+        CastingSpell();
+
+    }
+
+    private void CastingSpell()
+    {
+        if (Input.GetMouseButtonDown(0))
         {
-            //print(item.Key + " : " + item.Value);            
+            print("left"); // todo: cast out the spell
+        }
+        else if (Input.GetMouseButtonDown(1))
+        {
+            print("right");
+            player.Move(Vector3.zero, false);
+
         }
     }
 
-    private void ReadElements(ElementSlot[] _elementSlots, int _elementDamage)
+    private void ReadElements(ElementSlot[] _elementSlots, float _elementDamage)
     {
         foreach (ElementSlot _elementSlot in elementSlots)
         {
@@ -36,6 +64,13 @@ public class MagicCombo : MonoBehaviour
             }
         }
     }
+
+
+    public Dictionary<MagicType, float> GetDamageBook()
+    {
+        return damageBook;
+    }
+
 
 
 
