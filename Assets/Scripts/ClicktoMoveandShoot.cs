@@ -1,9 +1,14 @@
 ﻿// ClickToMove.cs
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
+using System.Collections.Generic;
+using System;
+using System.Linq;
+using UnityEngine.PlayerLoop;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class ClicktoMoveandShoot : MonoBehaviour
+public class ClicktoMoveAndShoot : MonoBehaviour
 {
     RaycastHit hitInfo = new RaycastHit();
     NavMeshAgent agent;
@@ -11,6 +16,7 @@ public class ClicktoMoveandShoot : MonoBehaviour
     ElementBag elementBag;
     [SerializeField] float magicSpeed = 10f;
     [SerializeField] float magicLifetime = 2f;
+    [SerializeField] ElementBall elementCombined;
 
     void Start()
     {
@@ -32,29 +38,64 @@ public class ClicktoMoveandShoot : MonoBehaviour
             }
             else if (Input.GetMouseButtonDown(0)) // left mouse
             {
-                ElementCombined _magic;
-                Vector3 direction = (hitInfo.point - transform.position).normalized;
-                Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 1f);
-                agent.isStopped = true;
-                agent.ResetPath();
+                ElementBall _magic;
+                Vector3 direction = StopMovementAndGetFaceDirection();
+                if (elementBag.LeadElementAvailable())
+                {
+                    _magic = GenerateSpell();
+                    CastTo(_magic, direction);
+                    elementBag.BurnElement();
+                } else
+                {
+                    print("Press space to assign a lead element to be able to cast spell");
+                }
 
-                _magic = elementBag.CastingSpell();
-
-
-                _magic.GetComponent<Rigidbody>().velocity = new Vector3(
-                    direction.x * magicSpeed,
-                    0f,
-                    direction.z * magicSpeed);
-
-
-                Destroy(_magic.gameObject, magicLifetime); // this code doesn't work somehow
-                print(_magic.name) ;
-
+                
             }
         }
+
+
+    }
+
+    private void DisplayDamageDictionary()
+    {
         
     }
 
+    private void CastTo(ElementBall _magic, Vector3 direction)
+    {
+        _magic.GetComponent<Rigidbody>().velocity = new Vector3(
+            direction.x * magicSpeed,
+            0f,
+            direction.z * magicSpeed);
+    }
+
+    private Vector3 StopMovementAndGetFaceDirection()
+    {
+        Vector3 direction = (hitInfo.point - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 1f);
+        agent.isStopped = true;
+        agent.ResetPath();
+        return direction;
+    }
+
+    public ElementBall GenerateSpell()
+    {
+        TextMesh _textMesh;
+        float _damage;
+        Vector3 _spellPosition = new Vector3(transform.position.x, 0f, transform.position.z);
+        ElementBall magic = Instantiate(elementCombined, _spellPosition, Quaternion.identity);
+        magic.UpdateDamageBook();
+        _textMesh = magic.GetComponentInChildren<TextMesh>();
+        _damage = magic.CurrentElementDamageBook.Sum(x => x.Value);
+        _textMesh.text = _damage.ToString();
+        return magic;
+
+        // todo: below are to be deleted, just adding in to debug damage book
+
+    }
+
+   
 
 }

@@ -9,6 +9,7 @@ public class EnemyHealth : MonoBehaviour
 
     [SerializeField] ElementType resistance;
     [SerializeField] float enemyHealth = 100;
+    [SerializeField] ElementPickUp elementToSpawnAfterDeath;
 
     ElementBag magicCombo;
     Dictionary<ElementType, float> currentDamageBook;
@@ -18,24 +19,58 @@ public class EnemyHealth : MonoBehaviour
     private void Start()
     {
         magicCombo = FindObjectOfType<ElementBag>();
+        currentDamageBook = magicCombo.GetDamageBook();
     }
 
     private void Update()
     {
-        OnDamageTaken();
+        //foreach (var entry in currentDamageBook)
+        //{
+        //    print(entry.Key + " : " + entry.Value);
+        //}
+        print(currentDamageBook.First().Key);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        print(other.name);
+        ProcessDamage();
     }
 
 
-    private void OnDamageTaken()
+    private void ProcessDamage()
     {
         currentDamageBook = magicCombo.GetDamageBook();
-        CheckForResistance();
-        damageReceived = currentDamageBook.Sum(x => x.Value);
+
+        foreach (var entry in currentDamageBook)
+        {
+            if (entry.Key == resistance)
+            {
+                float modifiedDamage = entry.Value / 2;
+                print("Enemey taking " + modifiedDamage + " Damage, of type " + entry.Key);
+                enemyHealth -= modifiedDamage;
+            } else
+            {
+                float modifiedDamage = entry.Value;
+                print("Enemey taking " + modifiedDamage + " Damage, of type " + entry.Key);
+                enemyHealth -= modifiedDamage;
+            }
+        }
+
+        //CheckForResistance();
+        //damageReceived = currentDamageBook.Sum(x => x.Value);
+        //enemyHealth -= damageReceived;
         if (enemyHealth <= 0)
         {
-            Destroy(this);
+            SpawnElement();
+            Destroy(gameObject);
             print("Enemy Exploded!");
         }
+    }
+
+    private void SpawnElement()
+    {
+        Instantiate(elementToSpawnAfterDeath, transform.position, Quaternion.identity);
     }
 
     private void CheckForResistance()

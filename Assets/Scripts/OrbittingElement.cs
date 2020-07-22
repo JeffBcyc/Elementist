@@ -13,7 +13,7 @@ public class OrbittingElement : MonoBehaviour
 
     private void Start()
     {
-        center = FindObjectOfType<ElementPivotCenter>().transform;
+        center = FindObjectOfType<ElementAuro>().transform;
         transform.localPosition = initialPosition * radius;
     }
 

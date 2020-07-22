@@ -7,11 +7,10 @@ public class ElementPickUp : MonoBehaviour
     [SerializeField] ElementType elementFromThisBook;
     [SerializeField] ElementBag playerMagicCombo;
 
-    //int elementLimit;
+    ParticleSystem thisParticleSystem;
+    Color color;
 
-
-    //var magicQueue;
-
+    [System.Obsolete]
     private void Awake()
     {
         playerMagicCombo = FindObjectOfType<ElementBag>();

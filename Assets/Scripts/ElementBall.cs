@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ElementCombined : MonoBehaviour
+public class ElementBall : MonoBehaviour
 {
 
     Dictionary<ElementType, float> currentElementDamageBook;
@@ -16,15 +16,23 @@ public class ElementCombined : MonoBehaviour
 
     private void Awake()
     {
+        UpdateDamageBook();
+    }
+
+    public void UpdateDamageBook()
+    {
         currentElementBag = FindObjectOfType<ElementBag>();
         currentElementDamageBook = currentElementBag.GetDamageBook();
-        textMesh = GetComponentInChildren<TextMesh>();
-        damage = currentElementDamageBook.Sum(x => x.Value);
-        textMesh.text = damage.ToString();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Destroyer")  Destroy(this); 
+        if (other.gameObject.tag == "Destroyer")  Destroy(gameObject); 
     }
+
+    public Dictionary<ElementType, float> CurrentElementDamageBook
+    {
+        get { return currentElementDamageBook; }
+    }
+
 }
