@@ -10,14 +10,14 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] ElementType resistance;
     [SerializeField] float enemyHealth = 100;
 
-    MagicCombo magicCombo;
+    ElementBag magicCombo;
     Dictionary<ElementType, float> currentDamageBook;
 
     float damageReceived;
 
     private void Start()
     {
-        magicCombo = FindObjectOfType<MagicCombo>();
+        magicCombo = FindObjectOfType<ElementBag>();
     }
 
     private void Update()

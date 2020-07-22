@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.ThirdPerson;
 
-public class ElementAuro : MonoBehaviour
+public class ElementPivotCenter : MonoBehaviour
 {
 
     [SerializeField] Transform followObject;

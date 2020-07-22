@@ -5,7 +5,7 @@ using UnityEngine;
 public class ElementPickUp : MonoBehaviour
 {
     [SerializeField] ElementType elementFromThisBook;
-    [SerializeField] MagicCombo playerMagicCombo;
+    [SerializeField] ElementBag playerMagicCombo;
 
     //int elementLimit;
 
@@ -14,7 +14,7 @@ public class ElementPickUp : MonoBehaviour
 
     private void Awake()
     {
-        playerMagicCombo = FindObjectOfType<MagicCombo>();
+        playerMagicCombo = FindObjectOfType<ElementBag>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -22,7 +22,7 @@ public class ElementPickUp : MonoBehaviour
         if (other.tag.Equals("Player"))
         {
             playerMagicCombo.FillInNewElement(elementFromThisBook);
-        //todo: list not full, fill in magicQueue
+            Destroy(gameObject);
         }
     }
 
