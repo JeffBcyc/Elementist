@@ -1,27 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ElementSlot : MonoBehaviour
 {
 
-    [SerializeField] MagicType magic;
+    [SerializeField] ElementType magic;
     [SerializeField] ParticleSystem[] magicParticles;
 
-
-    public MagicType GetMagicType()
+    public ElementType Element
     {
-        return magic;
-    }
-
-    private void Start()
-    {
-        //print(magic.ToString());
+        get { return magic; }
+        set { magic = value; }
     }
 
     private void Update()
     {
-
         //print(magic.ToString());
         foreach (ParticleSystem particle in magicParticles)
         {
@@ -35,4 +30,6 @@ public class ElementSlot : MonoBehaviour
             }
         }
     }
+
+
 }

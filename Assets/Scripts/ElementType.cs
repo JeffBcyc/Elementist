@@ -1,4 +1,4 @@
-﻿public enum MagicType
+﻿public enum ElementType
 {
     Empty = 0,
     Fire = 1,

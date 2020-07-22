@@ -43,8 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bffd1683e0596c459ceecba0e642af8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  elementSlots:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  elementSlots: []
   elmentDefaultDamage: 10
+  elementSlotPrefab: {fileID: 2716623675339389444, guid: e1618f24bff4dce44953c9990479340d,
+    type: 3}
+  elementSlotLimit: 3

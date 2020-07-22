@@ -13,17 +13,19 @@ public class OrbittingElement : MonoBehaviour
 
     private void Start()
     {
+        center = FindObjectOfType<ElementAuro>().transform;
         transform.localPosition = initialPosition * radius;
     }
 
 
     private void Update()
     {
-        Vector3 rotationVector = new Vector3(-axis.normalized.x, axis.normalized.y, axis.normalized.z);
-        transform.RotateAround(center.position, rotationVector , rotationSpeed * Time.deltaTime);
-        //Vector3 desiredPosition = (transform.position - center.position).normalized * radius + center.position;
-        //transform.position = Vector3.MoveTowards(transform.position, desiredPosition, Time.deltaTime * 2.0f);
+        ElementRotation(axis, center);
     }
 
-
+    private void ElementRotation(Vector3 _axis, Transform _center)
+    {
+        Vector3 rotationVector = new Vector3(-_axis.normalized.x, _axis.normalized.y, _axis.normalized.z);
+        transform.RotateAround(_center.position, rotationVector, rotationSpeed * Time.deltaTime);
+    }
 }

@@ -1168,6 +1168,8 @@ GameObject:
   - component: {fileID: 1024098140874474939}
   - component: {fileID: 1277940541426249}
   - component: {fileID: 1277940541426250}
+  - component: {fileID: 1277940541426251}
+  - component: {fileID: 1277940541426252}
   m_Layer: 0
   m_Name: MageMesh
   m_TagString: Untagged
@@ -1201,7 +1203,7 @@ Animator:
   m_GameObject: {fileID: 5971227403727268747}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: cb65eb249b552d742b211f18f4f01f7e, type: 3}
-  m_Controller: {fileID: 9100000, guid: e2cf68ff4b1ffda45a77f7307dd789b9, type: 2}
+  m_Controller: {fileID: 9100000, guid: 613c5c22d0d5b5e4caa18ccf4be1b2bf, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -1258,6 +1260,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4924558c36e73f64893d715166dcf4b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1277940541426251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5971227403727268747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffcae3469f67a274f9c3482fd282c6ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  head: {fileID: 5965797249137245717}
+  lookAtTargetPosition: {x: 0, y: 0, z: 0}
+  lookAtCoolTime: 0.2
+  lookAtHeatTime: 0.2
+  looking: 1
+--- !u!114 &1277940541426252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5971227403727268747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3904c0686bd6e4689c7389f91242b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5971242084645418045

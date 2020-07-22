@@ -15,7 +15,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Awake()
     {
-        target = FindObjectOfType<ThirdPersonCharacter>().transform;
+        target = FindObjectOfType<MotionController>().transform;
         thisEnemyAI = GetComponent<NavMeshAgent>();
     }
 

@@ -7,11 +7,11 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
 
-    [SerializeField] MagicType resistance;
+    [SerializeField] ElementType resistance;
     [SerializeField] float enemyHealth = 100;
 
     MagicCombo magicCombo;
-    Dictionary<MagicType, float> currentDamageBook;
+    Dictionary<ElementType, float> currentDamageBook;
 
     float damageReceived;
 
@@ -40,7 +40,7 @@ public class EnemyHealth : MonoBehaviour
 
     private void CheckForResistance()
     {
-        if (resistance.Equals(MagicType.Empty)) return;
+        if (resistance.Equals(ElementType.Empty)) return;
         try
         {
             currentDamageBook[resistance] /= 2;

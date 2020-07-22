@@ -4,38 +4,103 @@ using UnityEngine;
 using System;
 using UnityStandardAssets.Characters.ThirdPerson;
 using UnityEngine.UIElements;
+using UnityEngine.AI;
+using System.Linq;
 
 public class MagicCombo : MonoBehaviour
 {
 
-    [SerializeField] ElementSlot[] elementSlots;
+    public ElementSlot[] elementSlots;
     [SerializeField] float elmentDefaultDamage = 10f;
+    [SerializeField] ElementSlot elementSlotPrefab;
+
+    [SerializeField] ElementImages imageLeft;
+    [SerializeField] ElementImages imageMiddle;
+    [SerializeField] ElementImages imageRight;
+
+    public int elementSlotLimit = 3;
+    public Queue<ElementType> elementTypeQueue = new Queue<ElementType>();
+    public Queue<ElementSlot> elementSlotQueue = new Queue<ElementSlot>();
 
 
-    ThirdPersonCharacter player;
+    private Dictionary<ElementType, float> damageBook = new Dictionary<ElementType, float>();
 
-Dictionary<MagicType, float> damageBook = new Dictionary<MagicType, float>();
+
+    private MotionController player;
 
     private void Awake()
     {
-        player = FindObjectOfType<ThirdPersonCharacter>();
+        elementSlots = FindObjectsOfType<ElementSlot>(); // find all elementSlots
+        imageLeft = GameObject.Find("Left").GetComponent<ElementImages>();
+        imageMiddle = GameObject.Find("Middle").GetComponent<ElementImages>();
+        imageRight = GameObject.Find("Right").GetComponent<ElementImages>();
+
+        Array.Reverse(elementSlots);
+
+        player = FindObjectOfType<MotionController>();
+        InitializeQueues(); // initialize elementSlotQueue
+        ReadElements(elementSlots, elmentDefaultDamage); // add all element to the dict
+        // FillUpElementSlotQueue();
     }
 
-    private void Update()
+    private void InitializeQueues()
     {
-        ReadElements(elementSlots, elmentDefaultDamage);
+        for (int i = 0; i < elementSlots.Length; i++)
+        {
+            elementTypeQueue.Enqueue(elementSlots[i].Element);
+            elementSlotQueue.Enqueue(elementSlots[i]);
+        }
+    }
 
-        //foreach (var item in damageBook)
-        //{
-        //    //print(item.Key + " : " + item.Value);            
-        //}
+    //private void Update()
+    //{
+    //    //todo: CastingSpell();
+    //    //todo: Check for additional ElementSlot();
+    //}
 
-        
-        CastingSpell();
+    public void FillInNewElement(ElementType _newElement)
+    {
+        if (elementTypeQueue.Count < elementSlotLimit)
+        {
+            elementTypeQueue.Enqueue(_newElement) ;
+            elementSlotQueue.Enqueue(elementSlots[elementTypeQueue.Count]);
+        } else
+        {
+            ElementType _oldElementToRefresh = elementTypeQueue.Dequeue();
+            ElementSlot _oldElementSlotToRefresh = elementSlotQueue.Dequeue();
+            elementTypeQueue.Enqueue(_newElement);
+
+
+            _oldElementSlotToRefresh.Element = _newElement;
+            elementSlotQueue.Enqueue(_oldElementSlotToRefresh);
+        }
+
+
+        int _counter = 0;
+
+        foreach (var i in elementSlotQueue.ToArray())
+        {
+            elementSlots[_counter] = i;
+        }
+
+        imageLeft.ThisSlot = elementSlots[0];
+        imageMiddle.ThisSlot = elementSlots[1];
+        imageRight.ThisSlot = elementSlots[2];
+
+        ReadElements(elementSlots, elmentDefaultDamage); // update element dict
+
+        //imageLeft.ThisSlot = 
+
 
     }
 
-    private void CastingSpell()
+
+    public Queue<ElementSlot> GetElementSlotQueue()
+    {
+        return elementSlotQueue;
+    }
+
+    private void CastingSpell()    
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -44,8 +109,6 @@ Dictionary<MagicType, float> damageBook = new Dictionary<MagicType, float>();
         else if (Input.GetMouseButtonDown(1))
         {
             print("right");
-            //player.Move(Vector3.zero, false);
-
         }
     }
 
@@ -53,26 +116,23 @@ Dictionary<MagicType, float> damageBook = new Dictionary<MagicType, float>();
     {
         foreach (ElementSlot _elementSlot in elementSlots)
         {
-            if (_elementSlot.GetMagicType() == MagicType.Empty) continue;
+            if (_elementSlot.Element == ElementType.Empty) continue;
             try
             {
-                damageBook.Add(_elementSlot.GetMagicType(), _elementDamage);
+                damageBook.Add(_elementSlot.Element, _elementDamage);
             }
             catch
             {
-                damageBook[_elementSlot.GetMagicType()] += _elementDamage;
+                damageBook[_elementSlot.Element] += _elementDamage;
             }
         }
     }
 
 
-    public Dictionary<MagicType, float> GetDamageBook()
+    public Dictionary<ElementType, float> GetDamageBook()
     {
         return damageBook;
     }
-
-
-
 
 
 }

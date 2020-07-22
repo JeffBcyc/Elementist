@@ -14,11 +14,20 @@ public class ClickToMove : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray.origin, ray.direction, out hitInfo))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray.origin, ray.direction, out hitInfo))
+            if (Input.GetMouseButtonDown(1))
+            {
                 agent.destination = hitInfo.point;
+            }
+            else if (Input.GetMouseButtonDown(0))
+            {
+                Vector3 direction = (hitInfo.point - transform.position).normalized;
+                Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 1f);
+            }
         }
+        
     }
 }

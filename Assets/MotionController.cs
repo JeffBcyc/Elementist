@@ -50,4 +50,8 @@ public class MotionController : MonoBehaviour
         // Update position to agent position
         transform.position = agent.nextPosition;
     }
+
+
+
+
 }
