@@ -8,7 +8,7 @@ using System.Linq;
 using UnityEngine.PlayerLoop;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class ClicktoMoveAndShoot : MonoBehaviour
+public class ClicktoMoveandShoot : MonoBehaviour
 {
     RaycastHit hitInfo = new RaycastHit();
     NavMeshAgent agent;
