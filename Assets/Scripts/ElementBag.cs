@@ -10,27 +10,24 @@ using System.Linq;
 public class ElementBag : MonoBehaviour
 {
 
-    public ElementSlot[] elementSlots;
+    private ElementSlot[] elementSlots;
     [SerializeField] float elmentDefaultDamage = 10f;
     [SerializeField] ElementSlot elementSlotPrefab;
-    public int elementSlotLimit = 3;
-    public Queue<ElementSlot> elementSlotQueue = new Queue<ElementSlot>();
+    private int elementSlotLimit = 3;
+    private Queue<ElementSlot> elementSlotQueue = new Queue<ElementSlot>();
 
     private Dictionary<ElementType, float> damageBook = new Dictionary<ElementType, float>();
     private MotionController player;
 
+    private GameObject[] activeParticleSystem;
+
+
     // generate damagebook according to current elements in the bag
-    public Dictionary<ElementType, float> GetDamageBook() 
+    public Dictionary<ElementType, float> DamageBook
     {
-        return damageBook;
+       get {return damageBook;}
     }
 
-    public Queue<ElementSlot> GetElementSlotQueue() 
-    {
-        return elementSlotQueue;
-    }
-
-    GameObject[] activeParticleSystem;
 
 
     private void Awake()
@@ -38,26 +35,28 @@ public class ElementBag : MonoBehaviour
         elementSlots = FindObjectsOfType<ElementSlot>(); // find all elementSlots
         Array.Reverse(elementSlots);
         player = FindObjectOfType<MotionController>();
-        InitializeQueues(); // initialize elementSlotQueue
         ReadElements(elementSlots, elmentDefaultDamage); // add all element to the dict
         activeParticleSystem = GameObject.FindGameObjectsWithTag("ElementParticle");
     }
 
 
-    private void Update()
-    {
-        activeParticleSystem = GameObject.FindGameObjectsWithTag("ElementParticle");
+    //private void Update()
+    //{
+    //    foreach(var entry in damageBook)
+    //    {
+    //        print(entry.Key + " : " + entry.Value);
+    //    }
+    //    //    activeParticleSystem = GameObject.FindGameObjectsWithTag("ElementParticle");
+    //}
 
-    }
-
-    private void InitializeQueues()
-    {
-        for (int i = 0; i < elementSlots.Length; i++)
-        {
-            elementSlotQueue.Enqueue(elementSlots[i]);
-        }
-        elementSlotQueue = new Queue<ElementSlot>(elementSlotQueue.Reverse());
-    }
+    //private void InitializeQueues()
+    //{
+    //    for (int i = 0; i < elementSlots.Length; i++)
+    //    {
+    //        elementSlotQueue.Enqueue(elementSlots[i]);
+    //    }
+    //    elementSlotQueue = new Queue<ElementSlot>(elementSlotQueue.Reverse());
+    //}
 
     // this old method is hard to work with
     //public void FillInNewElement(ElementType _newElement)
@@ -82,11 +81,11 @@ public class ElementBag : MonoBehaviour
 
 
     // newer version uses simpler logic:
+    // 1. if there is slot empty, fill in first found slot
+    // 2. if all full, fill in the left most slot
     public void FillInNewElement(ElementType _newElement)
     {
         int _emptyIndex = elementSlots.Length+1;
-        // if there is slot empty, fill in first found slot
-        // if all full, fill in the left most slot
         for (int i = 0; i < elementSlots.Length; i++)
         {
             if (elementSlots[i].Element == ElementType.Empty)
@@ -153,10 +152,12 @@ public class ElementBag : MonoBehaviour
             }
         }
         ReadElements(elementSlots, elmentDefaultDamage);
+        //RotateElementSequence();
     }
 
     public bool LeadElementAvailable()
     {
         return elementSlots[0].Element != ElementType.Empty;
     }
+
 }

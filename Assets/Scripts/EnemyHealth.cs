@@ -7,54 +7,43 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
 
-    [SerializeField] ElementType resistance;
+    [SerializeField] ElementType weakness;
     [SerializeField] float enemyHealth = 100;
     [SerializeField] ElementPickUp elementToSpawnAfterDeath;
 
-    ElementBag magicCombo;
-    Dictionary<ElementType, float> currentDamageBook;
+    ElementBag elementBag;
+    ElementBall damage;
 
-    float damageReceived;
+
 
     private void Start()
     {
-        magicCombo = FindObjectOfType<ElementBag>();
-        currentDamageBook = magicCombo.GetDamageBook();
+        elementBag = FindObjectOfType<ElementBag>();
     }
 
-    private void Update()
-    {
-        //foreach (var entry in currentDamageBook)
-        //{
-        //    print(entry.Key + " : " + entry.Value);
-        //}
-        print(currentDamageBook.First().Key);
-    }
 
     private void OnTriggerEnter(Collider other)
     {
-        print(other.name);
-        ProcessDamage();
+        if (other.gameObject.tag == "MagicBall")
+        {
+            print("i'm hit by magic");
+            ProcessDamage(other);
+        }
     }
 
 
-    private void ProcessDamage()
+    private void ProcessDamage(Collider other)
     {
-        currentDamageBook = magicCombo.GetDamageBook();
+        damage = other.GetComponent<ElementBall>();
 
-        foreach (var entry in currentDamageBook)
+        if (damage.CombinedMagicType == weakness)
         {
-            if (entry.Key == resistance)
-            {
-                float modifiedDamage = entry.Value / 2;
-                print("Enemey taking " + modifiedDamage + " Damage, of type " + entry.Key);
-                enemyHealth -= modifiedDamage;
-            } else
-            {
-                float modifiedDamage = entry.Value;
-                print("Enemey taking " + modifiedDamage + " Damage, of type " + entry.Key);
-                enemyHealth -= modifiedDamage;
-            }
+            print("Enemey taking damage: " + damage.CombinedMagicType + " - " + damage.CombinedMagicDamage);
+            enemyHealth -= damage.CombinedMagicDamage;
+        } else
+        {
+            print("Enemey taking damage: " + damage.CombinedMagicType + " - " + damage.CombinedMagicDamage/2);
+            enemyHealth -= damage.CombinedMagicDamage/2;
         }
 
         //CheckForResistance();
@@ -73,16 +62,5 @@ public class EnemyHealth : MonoBehaviour
         Instantiate(elementToSpawnAfterDeath, transform.position, Quaternion.identity);
     }
 
-    private void CheckForResistance()
-    {
-        if (resistance.Equals(ElementType.Empty)) return;
-        try
-        {
-            currentDamageBook[resistance] /= 2;
-        }
-        catch
-        {
-            //print("no fire element in the bag");
-        }
-    }
+
 }

@@ -11,16 +11,12 @@ public class ElementImages : MonoBehaviour
 {
 
     [SerializeField] ElementSlot thisSlot;
-    [SerializeField] ElementBag playerMagicCombo;
+    [SerializeField] ElementBag elementBag;
     [SerializeField] Sprite[] elementSprites;
 
-    [SerializeField] int Queuenumber;
-
-    Queue<ElementSlot> currentSlotQueue;
     ElementType _magic;
     Image _image;
 
-    List<ElementSlot> currentQueueList = new List<ElementSlot>();
 
     public ElementSlot ThisSlot
     {
@@ -30,22 +26,15 @@ public class ElementImages : MonoBehaviour
 
     private void Start()
     {
-        playerMagicCombo = FindObjectOfType<ElementBag>();
-        currentSlotQueue = playerMagicCombo.GetElementSlotQueue();
-        currentQueueList = currentSlotQueue.ToList();
-        thisSlot = currentQueueList[Queuenumber];
-        //thisSlot = playerMagicCombo.elementSlots[correspondingSlotIndex];
+        elementBag = FindObjectOfType<ElementBag>();
         _image = GetComponent<Image>();
     }
 
     private void Update()
     {
-        currentSlotQueue = playerMagicCombo.GetElementSlotQueue();
-        currentQueueList = currentSlotQueue.ToList();
-        currentQueueList.Reverse();
-        thisSlot = currentQueueList[Queuenumber];
-
         _magic = thisSlot.Element;
+
+
         string[] arrayNameofSprite = Array.ConvertAll(elementSprites, g => g.name);
         int a = Array.IndexOf(arrayNameofSprite, _magic.ToString());
         try
@@ -58,16 +47,5 @@ public class ElementImages : MonoBehaviour
         }
 
     }
-
-    //public void UpdateElementImages()
-    //{
-    //    Queue<ElementSlot> _currentSlotQueue = playerMagicCombo.GetElementSlotQueue();
-    //    print(correspondingSlotIndex);
-    //    for (int i = -1; i < correspondingSlotIndex; i++)
-    //    {
-    //        _targetSlotToUpdate = _currentSlotQueue.Dequeue();
-    //    }
-    //    print(_targetSlotToUpdate.Element.ToString());
-    //}
 
 }

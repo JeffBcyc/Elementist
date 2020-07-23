@@ -16,7 +16,7 @@ public class ClicktoMoveAndShoot : MonoBehaviour
     ElementBag elementBag;
     [SerializeField] float magicSpeed = 10f;
     [SerializeField] float magicLifetime = 2f;
-    [SerializeField] ElementBall elementCombined;
+    [SerializeField] ElementBall elementBall;
 
     void Start()
     {
@@ -44,7 +44,6 @@ public class ClicktoMoveAndShoot : MonoBehaviour
                 {
                     _magic = GenerateSpell();
                     CastTo(_magic, direction);
-                    elementBag.BurnElement();
                 } else
                 {
                     print("Press space to assign a lead element to be able to cast spell");
@@ -85,14 +84,12 @@ public class ClicktoMoveAndShoot : MonoBehaviour
         TextMesh _textMesh;
         float _damage;
         Vector3 _spellPosition = new Vector3(transform.position.x, 0f, transform.position.z);
-        ElementBall magic = Instantiate(elementCombined, _spellPosition, Quaternion.identity);
-        magic.UpdateDamageBook();
+        ElementBall magic = Instantiate(elementBall, _spellPosition, Quaternion.identity);
+        elementBag.BurnElement();
         _textMesh = magic.GetComponentInChildren<TextMesh>();
-        _damage = magic.CurrentElementDamageBook.Sum(x => x.Value);
+        _damage = magic.DamageBookInTheBall.Sum(x => x.Value);
         _textMesh.text = _damage.ToString();
         return magic;
-
-        // todo: below are to be deleted, just adding in to debug damage book
 
     }
 

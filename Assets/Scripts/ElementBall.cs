@@ -6,23 +6,18 @@ using UnityEngine.UI;
 
 public class ElementBall : MonoBehaviour
 {
-
-    Dictionary<ElementType, float> currentElementDamageBook;
-    ElementBag currentElementBag;
-
-    float damage;
-
-    TextMesh textMesh;
+    private ElementBag elementBag;
+    private Dictionary<ElementType, float> elementBagDamageBook;
+    ElementType combinedMagic;
+    float combinedMagicDamage;
 
     private void Awake()
     {
-        UpdateDamageBook();
-    }
-
-    public void UpdateDamageBook()
-    {
-        currentElementBag = FindObjectOfType<ElementBag>();
-        currentElementDamageBook = currentElementBag.GetDamageBook();
+        elementBag = FindObjectOfType<ElementBag>();
+        gameObject.name = Time.time.ToString();
+        elementBagDamageBook = new Dictionary<ElementType, float>(elementBag.DamageBook);
+        combinedMagic = elementBagDamageBook.First().Key;
+        combinedMagicDamage = elementBagDamageBook.Sum(x => x.Value);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -30,9 +25,18 @@ public class ElementBall : MonoBehaviour
         if (other.gameObject.tag == "Destroyer")  Destroy(gameObject); 
     }
 
-    public Dictionary<ElementType, float> CurrentElementDamageBook
+    public Dictionary<ElementType,float> DamageBookInTheBall
+    { get { return elementBagDamageBook; } }
+
+
+    public ElementType CombinedMagicType
     {
-        get { return currentElementDamageBook; }
+        get { return combinedMagic; }
+    }
+
+    public float CombinedMagicDamage
+    {
+        get { return combinedMagicDamage; }
     }
 
 }

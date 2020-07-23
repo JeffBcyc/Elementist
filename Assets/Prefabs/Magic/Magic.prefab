@@ -108,8 +108,8 @@ GameObject:
   - component: {fileID: 7154103616748007614}
   - component: {fileID: 5898821181378114861}
   m_Layer: 0
-  m_Name: ElementCombined
-  m_TagString: Untagged
+  m_Name: Magic
+  m_TagString: MagicBall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
