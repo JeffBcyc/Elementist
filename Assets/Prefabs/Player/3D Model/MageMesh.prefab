@@ -1262,6 +1262,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4924558c36e73f64893d715166dcf4b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  magicSpeed: 10
+  magicLifetime: 2
+  elementCombined: {fileID: 7154103616748007614, guid: adb14606d42bbc649b396ac0834c4a8a,
+    type: 3}
 --- !u!114 &1277940541426251
 MonoBehaviour:
   m_ObjectHideFlags: 0
