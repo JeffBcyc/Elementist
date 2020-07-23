@@ -19,7 +19,7 @@ public class ElementBag : MonoBehaviour
     private Dictionary<ElementType, float> damageBook = new Dictionary<ElementType, float>();
     private MotionController player;
 
-    private GameObject[] activeParticleSystem;
+    private ParticleSystem activeParticleSystem;
 
 
     // generate damagebook according to current elements in the bag
@@ -36,48 +36,7 @@ public class ElementBag : MonoBehaviour
         Array.Reverse(elementSlots);
         player = FindObjectOfType<MotionController>();
         ReadElements(elementSlots, elmentDefaultDamage); // add all element to the dict
-        activeParticleSystem = GameObject.FindGameObjectsWithTag("ElementParticle");
     }
-
-
-    //private void Update()
-    //{
-    //    foreach(var entry in damageBook)
-    //    {
-    //        print(entry.Key + " : " + entry.Value);
-    //    }
-    //    //    activeParticleSystem = GameObject.FindGameObjectsWithTag("ElementParticle");
-    //}
-
-    //private void InitializeQueues()
-    //{
-    //    for (int i = 0; i < elementSlots.Length; i++)
-    //    {
-    //        elementSlotQueue.Enqueue(elementSlots[i]);
-    //    }
-    //    elementSlotQueue = new Queue<ElementSlot>(elementSlotQueue.Reverse());
-    //}
-
-    // this old method is hard to work with
-    //public void FillInNewElement(ElementType _newElement)
-    //{
-
-
-    //    if (elementSlotQueue.Count < elementSlotLimit)
-    //    {
-
-    //        elementSlotQueue.Enqueue(elementSlots[elementSlotQueue.Count]);
-    //        elementSlots[elementSlotQueue.Count].Element = _newElement;
-    //        elementSlotQueue = new Queue<ElementSlot>(elementSlotQueue.Reverse());
-    //    } else if (elementSlotQueue.Count >= elementSlotLimit)
-    //    {
-    //        ElementSlot _oldElementSlotToRefresh = elementSlotQueue.Dequeue();
-    //        _oldElementSlotToRefresh.Element = _newElement;
-    //        elementSlotQueue.Enqueue(_oldElementSlotToRefresh);
-    //    }
-
-    //    ReadElements(elementSlots, elmentDefaultDamage); 
-    //}
 
 
     // newer version uses simpler logic:
@@ -160,4 +119,10 @@ public class ElementBag : MonoBehaviour
         return elementSlots[0].Element != ElementType.Empty;
     }
 
+    public ParticleSystem FirstSlotElement()
+    {
+        activeParticleSystem = elementSlots[0].GetComponentInChildren<ParticleSystem>();
+        return activeParticleSystem ;
+    }
+    
 }

@@ -11,9 +11,12 @@ public class ElementBall : MonoBehaviour
     ElementType combinedMagic;
     float combinedMagicDamage;
 
+    [SerializeField] ParticleSystem targetParticleSystem;
+
     private void Awake()
     {
         elementBag = FindObjectOfType<ElementBag>();
+
         gameObject.name = Time.time.ToString();
         elementBagDamageBook = new Dictionary<ElementType, float>(elementBag.DamageBook);
         combinedMagic = elementBagDamageBook.First().Key;

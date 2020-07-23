@@ -22,6 +22,9 @@ public class ClicktoMoveAndShoot : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         elementBag = FindObjectOfType<ElementBag>();
+
+
+
     }
 
 
@@ -81,6 +84,8 @@ public class ClicktoMoveAndShoot : MonoBehaviour
 
     public ElementBall GenerateSpell()
     {
+        ParticleSystem _mainParticle = elementBag.FirstSlotElement();
+
         TextMesh _textMesh;
         float _damage;
         Vector3 _spellPosition = new Vector3(transform.position.x, 0f, transform.position.z);
