@@ -25,7 +25,10 @@ public class ElementBall : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Destroyer")  Destroy(gameObject); 
+        if (other.gameObject.tag == "Destroyer" || other.gameObject.tag == "Enemy")
+        {
+            Destroy(gameObject);
+        }  
     }
 
     public Dictionary<ElementType,float> DamageBookInTheBall

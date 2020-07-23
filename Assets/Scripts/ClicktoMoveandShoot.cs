@@ -90,6 +90,9 @@ public class ClicktoMoveAndShoot : MonoBehaviour
         float _damage;
         Vector3 _spellPosition = new Vector3(transform.position.x, 0f, transform.position.z);
         ElementBall magic = Instantiate(elementBall, _spellPosition, Quaternion.identity);
+        
+
+
         elementBag.BurnElement();
         _textMesh = magic.GetComponentInChildren<TextMesh>();
         _damage = magic.DamageBookInTheBall.Sum(x => x.Value);
