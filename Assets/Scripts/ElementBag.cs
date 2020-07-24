@@ -6,6 +6,7 @@ using UnityStandardAssets.Characters.ThirdPerson;
 using UnityEngine.UIElements;
 using UnityEngine.AI;
 using System.Linq;
+using System.Net;
 
 public class ElementBag : MonoBehaviour
 {
@@ -14,18 +15,16 @@ public class ElementBag : MonoBehaviour
     [SerializeField] float elmentDefaultDamage = 10f;
     [SerializeField] ElementSlot elementSlotPrefab;
     private int elementSlotLimit = 3;
-    private Queue<ElementSlot> elementSlotQueue = new Queue<ElementSlot>();
-
     private Dictionary<ElementType, float> damageBook = new Dictionary<ElementType, float>();
     private MotionController player;
-
     private ParticleSystem activeParticleSystem;
 
 
     // generate damagebook according to current elements in the bag
+    // read access only
     public Dictionary<ElementType, float> DamageBook
     {
-       get {return damageBook;}
+       get {return damageBook; }
     }
 
 
@@ -64,20 +63,16 @@ public class ElementBag : MonoBehaviour
         ReadElements(elementSlots, elmentDefaultDamage);
     }
 
+    // no more accumulating damage
     private void ReadElements(ElementSlot[] _elementSlots, float _elementDamage)
     {
         damageBook.Clear();
-        foreach (ElementSlot _elementSlot in elementSlots)
+        if (_elementSlots[0].Element == ElementType.Fire)
         {
-            if (_elementSlot.Element == ElementType.Empty) continue;
-            try
-            {
-                damageBook.Add(_elementSlot.Element, _elementDamage);
-            }
-            catch
-            {
-                damageBook[_elementSlot.Element] += _elementDamage;
-            }
+            damageBook.Add(_elementSlots[0].Element, _elementDamage * 2);
+        } else
+        {
+            damageBook.Add(_elementSlots[0].Element, _elementDamage);
         }
     }
 
@@ -94,6 +89,7 @@ public class ElementBag : MonoBehaviour
                 elementSlots[i].Element = elementSlots[i + 1].Element;
             }
         }
+        ReadElements(elementSlots, elmentDefaultDamage);
     }
 
     public void BurnElement()
@@ -124,5 +120,6 @@ public class ElementBag : MonoBehaviour
         activeParticleSystem = elementSlots[0].GetComponentInChildren<ParticleSystem>();
         return activeParticleSystem ;
     }
-    
+
+
 }

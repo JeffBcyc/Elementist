@@ -7,8 +7,12 @@ public class ElementPickUp : MonoBehaviour
     [SerializeField] ElementType elementFromThisBook;
     [SerializeField] ElementBag playerMagicCombo;
 
-    ParticleSystem thisParticleSystem;
     Color color;
+
+    public ElementType ElementFromThisBook
+    {
+        get { return elementFromThisBook; }
+    }
 
     [System.Obsolete]
     private void Awake()

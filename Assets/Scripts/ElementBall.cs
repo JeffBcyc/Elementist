@@ -16,11 +16,10 @@ public class ElementBall : MonoBehaviour
     private void Awake()
     {
         elementBag = FindObjectOfType<ElementBag>();
-
         gameObject.name = Time.time.ToString();
         elementBagDamageBook = new Dictionary<ElementType, float>(elementBag.DamageBook);
         combinedMagic = elementBagDamageBook.First().Key;
-        combinedMagicDamage = elementBagDamageBook.Sum(x => x.Value);
+        combinedMagicDamage = elementBagDamageBook.First().Value;
     }
 
     private void OnTriggerEnter(Collider other)
