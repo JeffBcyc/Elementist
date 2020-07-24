@@ -63,7 +63,7 @@ public class EnemyHealth : MonoBehaviour
         {
             SpawnElement();
             enemyCounter.EnemyCountDecrease();
-            Destroy(gameObject, 5f);
+            Destroy(gameObject);
         }
         else
         {

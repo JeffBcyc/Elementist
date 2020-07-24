@@ -13,7 +13,6 @@ public class ElementBag : MonoBehaviour
 
     private ElementSlot[] elementSlots;
     [SerializeField] float elmentDefaultDamage = 10f;
-    [SerializeField] ElementSlot elementSlotPrefab;
     private int elementSlotLimit = 3;
     private Dictionary<ElementType, float> damageBook = new Dictionary<ElementType, float>();
     private MotionController player;

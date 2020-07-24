@@ -33,8 +33,6 @@ public class ElementImages : MonoBehaviour
     private void Update()
     {
         _magic = thisSlot.Element;
-
-
         string[] arrayNameofSprite = Array.ConvertAll(elementSprites, g => g.name);
         int a = Array.IndexOf(arrayNameofSprite, _magic.ToString());
         try
