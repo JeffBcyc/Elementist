@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
-using UnityStandardAssets.Characters.ThirdPerson;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -32,7 +29,7 @@ public class EnemyAI : MonoBehaviour
         if (_targetDistance < enemySight && _targetDistance >= attackRange)
         {
             thisEnemyAI.SetDestination(target.position);
-        } 
+        }
     }
 
 }

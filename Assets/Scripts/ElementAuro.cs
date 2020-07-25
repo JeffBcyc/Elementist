@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityStandardAssets.Characters.ThirdPerson;
+﻿using UnityEngine;
 
 public class ElementAuro : MonoBehaviour
 {

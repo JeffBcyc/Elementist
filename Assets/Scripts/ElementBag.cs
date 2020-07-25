@@ -1,31 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using System;
-using UnityStandardAssets.Characters.ThirdPerson;
-using UnityEngine.UIElements;
-using UnityEngine.AI;
-using System.Linq;
 
 public class ElementBag : MonoBehaviour
 {
 
     private ElementSlot[] elementSlots;
-    [SerializeField] float elmentDefaultDamage = 10f;
-    [SerializeField] ElementSlot elementSlotPrefab;
+    [SerializeField] float elmentDefaultDamage = 1f;
     private int elementSlotLimit = 3;
-    private Queue<ElementSlot> elementSlotQueue = new Queue<ElementSlot>();
-
     private Dictionary<ElementType, float> damageBook = new Dictionary<ElementType, float>();
     private MotionController player;
-
     private ParticleSystem activeParticleSystem;
 
 
     // generate damagebook according to current elements in the bag
+    // read access only
     public Dictionary<ElementType, float> DamageBook
     {
-       get {return damageBook;}
+        get { return damageBook; }
     }
 
 
@@ -33,7 +24,7 @@ public class ElementBag : MonoBehaviour
     private void Awake()
     {
         elementSlots = FindObjectsOfType<ElementSlot>(); // find all elementSlots
-        Array.Reverse(elementSlots);
+        //Array.Reverse(elementSlots);
         player = FindObjectOfType<MotionController>();
         ReadElements(elementSlots, elmentDefaultDamage); // add all element to the dict
     }
@@ -44,7 +35,7 @@ public class ElementBag : MonoBehaviour
     // 2. if all full, fill in the left most slot
     public void FillInNewElement(ElementType _newElement)
     {
-        int _emptyIndex = elementSlots.Length+1;
+        int _emptyIndex = elementSlots.Length + 1;
         for (int i = 0; i < elementSlots.Length; i++)
         {
             if (elementSlots[i].Element == ElementType.Empty)
@@ -64,20 +55,17 @@ public class ElementBag : MonoBehaviour
         ReadElements(elementSlots, elmentDefaultDamage);
     }
 
+    // no more accumulating damage
     private void ReadElements(ElementSlot[] _elementSlots, float _elementDamage)
     {
         damageBook.Clear();
-        foreach (ElementSlot _elementSlot in elementSlots)
+        if (_elementSlots[0].Element == ElementType.Fire)
         {
-            if (_elementSlot.Element == ElementType.Empty) continue;
-            try
-            {
-                damageBook.Add(_elementSlot.Element, _elementDamage);
-            }
-            catch
-            {
-                damageBook[_elementSlot.Element] += _elementDamage;
-            }
+            damageBook.Add(_elementSlots[0].Element, _elementDamage * 2);
+        }
+        else
+        {
+            damageBook.Add(_elementSlots[0].Element, _elementDamage);
         }
     }
 
@@ -89,11 +77,13 @@ public class ElementBag : MonoBehaviour
             if (i == (elementSlots.Length - 1))
             {
                 elementSlots[i].Element = _lastElement;
-            } else
+            }
+            else
             {
                 elementSlots[i].Element = elementSlots[i + 1].Element;
             }
         }
+        ReadElements(elementSlots, elmentDefaultDamage);
     }
 
     public void BurnElement()
@@ -122,7 +112,8 @@ public class ElementBag : MonoBehaviour
     public ParticleSystem FirstSlotElement()
     {
         activeParticleSystem = elementSlots[0].GetComponentInChildren<ParticleSystem>();
-        return activeParticleSystem ;
+        return activeParticleSystem;
     }
-    
+
+
 }

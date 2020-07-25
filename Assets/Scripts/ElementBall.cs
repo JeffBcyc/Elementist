@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ElementBall : MonoBehaviour
 {
@@ -16,11 +14,10 @@ public class ElementBall : MonoBehaviour
     private void Awake()
     {
         elementBag = FindObjectOfType<ElementBag>();
-
         gameObject.name = Time.time.ToString();
         elementBagDamageBook = new Dictionary<ElementType, float>(elementBag.DamageBook);
         combinedMagic = elementBagDamageBook.First().Key;
-        combinedMagicDamage = elementBagDamageBook.Sum(x => x.Value);
+        combinedMagicDamage = elementBagDamageBook.First().Value;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -28,10 +25,10 @@ public class ElementBall : MonoBehaviour
         if (other.gameObject.tag == "Destroyer" || other.gameObject.tag == "Enemy")
         {
             Destroy(gameObject);
-        }  
+        }
     }
 
-    public Dictionary<ElementType,float> DamageBookInTheBall
+    public Dictionary<ElementType, float> DamageBookInTheBall
     { get { return elementBagDamageBook; } }
 
 

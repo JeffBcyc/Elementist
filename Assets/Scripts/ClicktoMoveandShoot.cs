@@ -1,11 +1,7 @@
 ﻿// ClickToMove.cs
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
-using System.Collections;
-using System.Collections.Generic;
-using System;
-using System.Linq;
-using UnityEngine.PlayerLoop;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class ClicktoMoveandShoot : MonoBehaviour
@@ -17,13 +13,16 @@ public class ClicktoMoveandShoot : MonoBehaviour
     [SerializeField] float magicSpeed = 10f;
     [SerializeField] float magicLifetime = 2f;
     [SerializeField] ElementBall elementBall;
+    Animator animator;
+
+    private float agentSpeed;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         elementBag = FindObjectOfType<ElementBag>();
 
-
+        animator = GetComponent<Animator>();
 
     }
 
@@ -31,7 +30,10 @@ public class ClicktoMoveandShoot : MonoBehaviour
 
     void Update()
     {
-        
+
+        float speedPercent = agent.velocity.magnitude / agent.speed;
+        animator.SetFloat("speedPercent", speedPercent, 0.1f, Time.deltaTime);
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray.origin, ray.direction, out hitInfo))
         {
@@ -41,19 +43,27 @@ public class ClicktoMoveandShoot : MonoBehaviour
             }
             else if (Input.GetMouseButtonDown(0)) // left mouse
             {
+                print(hitInfo.point);
+                print(hitInfo.collider.name);
+
                 ElementBall _magic;
                 Vector3 direction = StopMovementAndGetFaceDirection();
                 if (elementBag.LeadElementAvailable())
                 {
                     _magic = GenerateSpell();
                     CastTo(_magic, direction);
-                } else
+                }
+                else
                 {
                     print("Press space to assign a lead element to be able to cast spell");
                 }
-
-                
             }
+
+            if (speedPercent == 0)
+            {
+                animator.SetFloat("speedPercent", 0f);
+            }
+
         }
 
 
@@ -61,7 +71,7 @@ public class ClicktoMoveandShoot : MonoBehaviour
 
     private void DisplayDamageDictionary()
     {
-        
+
     }
 
     private void CastTo(ElementBall _magic, Vector3 direction)
@@ -90,7 +100,7 @@ public class ClicktoMoveandShoot : MonoBehaviour
         float _damage;
         Vector3 _spellPosition = new Vector3(transform.position.x, 0f, transform.position.z);
         ElementBall magic = Instantiate(elementBall, _spellPosition, Quaternion.identity);
-        
+
 
 
         elementBag.BurnElement();
@@ -101,6 +111,6 @@ public class ClicktoMoveandShoot : MonoBehaviour
 
     }
 
-   
+
 
 }
