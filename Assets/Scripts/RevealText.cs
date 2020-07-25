@@ -1,7 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public class RevealText : MonoBehaviour
 {
@@ -20,11 +19,11 @@ public class RevealText : MonoBehaviour
         m_TextComponent = gameObject.GetComponent<TMP_Text>();
     }
 
-    public void StartRollingText() 
+    public void StartRollingText()
     {
         StartCoroutine(AnimateVertexColors());
     }
-        
+
 
 
     IEnumerator AnimateVertexColors()
@@ -46,7 +45,7 @@ public class RevealText : MonoBehaviour
             // Spread should not exceed the number of characters.
             byte fadeSteps = (byte)Mathf.Max(1, 255 / RolloverCharacterSpread);
 
-            
+
             for (int i = startingCharacterRange; i < currentCharacter + 1; i++)
             {
                 // Skip characters that are not visible

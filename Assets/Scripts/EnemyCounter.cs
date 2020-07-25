@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
-using TMPro;
-using Unity.Collections.LowLevel.Unsafe;
 
 public class EnemyCounter : MonoBehaviour
 {
@@ -45,7 +41,7 @@ public class EnemyCounter : MonoBehaviour
 
     IEnumerator LoadSceneEndCanvas()
     {
-        
+
         hideText.gameObject.SetActive(false);
         yield return new WaitForSeconds(2f);
         sceneEndCanvas.gameObject.SetActive(true);
@@ -57,7 +53,7 @@ public class EnemyCounter : MonoBehaviour
     }
 
 
-    
+
 
 
 }

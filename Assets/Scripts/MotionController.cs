@@ -12,7 +12,7 @@ public class MotionController : MonoBehaviour
 
     void Start()
     {
-        anim = GetComponent<Animator>(); 
+        anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         // Don’t update position automatically
         agent.updatePosition = false;

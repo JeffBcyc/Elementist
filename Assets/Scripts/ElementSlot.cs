@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UIElements;
+﻿using UnityEngine;
 
 public class ElementSlot : MonoBehaviour
 {
@@ -24,7 +21,8 @@ public class ElementSlot : MonoBehaviour
             if (particle.name == magic.ToString())
             {
                 particle.gameObject.SetActive(true);
-            } else
+            }
+            else
             {
                 particle.gameObject.SetActive(false);
             }

@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -40,7 +35,8 @@ public class ElementImages : MonoBehaviour
         if (_magic == ElementType.Fire)
         {
             damageAmount.text = "2";
-        } else if (_magic == ElementType.Empty)
+        }
+        else if (_magic == ElementType.Empty)
         {
             damageAmount.text = "0";
         }
@@ -48,7 +44,7 @@ public class ElementImages : MonoBehaviour
         {
             damageAmount.text = "1";
         }
-        
+
         string[] arrayNameofSprite = Array.ConvertAll(elementSprites, g => g.name);
         int a = Array.IndexOf(arrayNameofSprite, _magic.ToString());
         //print(thisSlot.name + ":" + a);

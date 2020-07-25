@@ -1,12 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using System;
-using UnityStandardAssets.Characters.ThirdPerson;
-using UnityEngine.UIElements;
-using UnityEngine.AI;
-using System.Linq;
-using System.Net;
 
 public class ElementBag : MonoBehaviour
 {
@@ -23,7 +16,7 @@ public class ElementBag : MonoBehaviour
     // read access only
     public Dictionary<ElementType, float> DamageBook
     {
-       get {return damageBook; }
+        get { return damageBook; }
     }
 
 
@@ -42,7 +35,7 @@ public class ElementBag : MonoBehaviour
     // 2. if all full, fill in the left most slot
     public void FillInNewElement(ElementType _newElement)
     {
-        int _emptyIndex = elementSlots.Length+1;
+        int _emptyIndex = elementSlots.Length + 1;
         for (int i = 0; i < elementSlots.Length; i++)
         {
             if (elementSlots[i].Element == ElementType.Empty)
@@ -69,7 +62,8 @@ public class ElementBag : MonoBehaviour
         if (_elementSlots[0].Element == ElementType.Fire)
         {
             damageBook.Add(_elementSlots[0].Element, _elementDamage * 2);
-        } else
+        }
+        else
         {
             damageBook.Add(_elementSlots[0].Element, _elementDamage);
         }
@@ -83,7 +77,8 @@ public class ElementBag : MonoBehaviour
             if (i == (elementSlots.Length - 1))
             {
                 elementSlots[i].Element = _lastElement;
-            } else
+            }
+            else
             {
                 elementSlots[i].Element = elementSlots[i + 1].Element;
             }
@@ -117,7 +112,7 @@ public class ElementBag : MonoBehaviour
     public ParticleSystem FirstSlotElement()
     {
         activeParticleSystem = elementSlots[0].GetComponentInChildren<ParticleSystem>();
-        return activeParticleSystem ;
+        return activeParticleSystem;
     }
 
 

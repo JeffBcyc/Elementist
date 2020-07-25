@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,7 +14,8 @@ public class SceneController : MonoBehaviour
         if (sceneControllerCount > 1)
         {
             Destroy(this);
-        } else
+        }
+        else
         {
             DontDestroyOnLoad(this);
         }
@@ -29,7 +27,8 @@ public class SceneController : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex == 3)
         {
             print("no more scene");
-        } else
+        }
+        else
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }

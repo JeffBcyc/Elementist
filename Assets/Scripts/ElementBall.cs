@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ElementBall : MonoBehaviour
 {
@@ -27,10 +25,10 @@ public class ElementBall : MonoBehaviour
         if (other.gameObject.tag == "Destroyer" || other.gameObject.tag == "Enemy")
         {
             Destroy(gameObject);
-        }  
+        }
     }
 
-    public Dictionary<ElementType,float> DamageBookInTheBall
+    public Dictionary<ElementType, float> DamageBookInTheBall
     { get { return elementBagDamageBook; } }
 
 

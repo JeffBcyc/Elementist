@@ -1,11 +1,7 @@
 ﻿// ClickToMove.cs
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
-using System.Collections;
-using System.Collections.Generic;
-using System;
-using System.Linq;
-using UnityEngine.PlayerLoop;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class ClicktoMoveandShoot : MonoBehaviour
@@ -56,7 +52,8 @@ public class ClicktoMoveandShoot : MonoBehaviour
                 {
                     _magic = GenerateSpell();
                     CastTo(_magic, direction);
-                } else
+                }
+                else
                 {
                     print("Press space to assign a lead element to be able to cast spell");
                 }
@@ -74,7 +71,7 @@ public class ClicktoMoveandShoot : MonoBehaviour
 
     private void DisplayDamageDictionary()
     {
-        
+
     }
 
     private void CastTo(ElementBall _magic, Vector3 direction)
@@ -103,7 +100,7 @@ public class ClicktoMoveandShoot : MonoBehaviour
         float _damage;
         Vector3 _spellPosition = new Vector3(transform.position.x, 0f, transform.position.z);
         ElementBall magic = Instantiate(elementBall, _spellPosition, Quaternion.identity);
-        
+
 
 
         elementBag.BurnElement();
@@ -114,6 +111,6 @@ public class ClicktoMoveandShoot : MonoBehaviour
 
     }
 
-   
+
 
 }
