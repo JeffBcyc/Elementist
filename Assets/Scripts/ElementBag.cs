@@ -12,7 +12,7 @@ public class ElementBag : MonoBehaviour
 {
 
     private ElementSlot[] elementSlots;
-    [SerializeField] float elmentDefaultDamage = 10f;
+    [SerializeField] float elmentDefaultDamage = 1f;
     private int elementSlotLimit = 3;
     private Dictionary<ElementType, float> damageBook = new Dictionary<ElementType, float>();
     private MotionController player;
@@ -31,7 +31,7 @@ public class ElementBag : MonoBehaviour
     private void Awake()
     {
         elementSlots = FindObjectsOfType<ElementSlot>(); // find all elementSlots
-        Array.Reverse(elementSlots);
+        //Array.Reverse(elementSlots);
         player = FindObjectOfType<MotionController>();
         ReadElements(elementSlots, elmentDefaultDamage); // add all element to the dict
     }

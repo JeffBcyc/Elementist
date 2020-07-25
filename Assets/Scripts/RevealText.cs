@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class UpdateText : MonoBehaviour
+public class RevealText : MonoBehaviour
 {
     [SerializeField] TMP_Text m_TextComponent;
 
 
-    public float FadeSpeed = 15.0F;
-    public int RolloverCharacterSpread = 10;
+    public float FadeSpeed = 20F;
+    public int RolloverCharacterSpread = 15;
     public Color ColorTint;
+
+
+
 
     private void Start()
     {

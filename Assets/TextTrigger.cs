@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class TextTrigger : MonoBehaviour
 {
 
-    [SerializeField] UpdateText textToTrigger;
-    [SerializeField] UpdateText textToDisable;
+    [SerializeField] RevealText textToTrigger;
+    [SerializeField] RevealText textToDisable;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -16,7 +16,6 @@ public class TextTrigger : MonoBehaviour
         {
 
             textToTrigger.gameObject.SetActive(true);
-
             textToTrigger.StartRollingText();
             try
             {
@@ -26,9 +25,7 @@ public class TextTrigger : MonoBehaviour
             {
                 Debug.Log("nothing happends");
             }
-
-            // todo: the bug happened because when the book is destroyed, the coroutine is gone.
-            // may need to separate the book collider from book
+            Destroy(gameObject);
 
         }
 

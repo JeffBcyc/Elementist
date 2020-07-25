@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
@@ -23,10 +22,10 @@ public class EnemyHealth : MonoBehaviour
 
     private enum EnemyStatus
     {
-        Wet,
+        Frozen,
         Burning,
         Electrified,
-        Thinking
+        Nothing
     }
 
     ElementBag elementBag;
@@ -36,10 +35,10 @@ public class EnemyHealth : MonoBehaviour
     private void Start()
     {
         enemyCounter = FindObjectOfType<EnemyCounter>();
-        enemyStatus = EnemyStatus.Thinking;
+        enemyStatus = EnemyStatus.Nothing;
         elementBag = FindObjectOfType<ElementBag>();
         healthBar.SetMaxHealth(enemyHealth);
-        textMesh.text =  enemyStatus.ToString();
+        textMesh.text =  "";
     }
 
 
@@ -101,7 +100,7 @@ public class EnemyHealth : MonoBehaviour
                     break;
             }
         }
-        else if (enemyStatus == EnemyStatus.Wet)
+        else if (enemyStatus == EnemyStatus.Frozen)
         {
             switch (damage.CombinedMagicType)
             {
@@ -122,8 +121,8 @@ public class EnemyHealth : MonoBehaviour
         EnemyStatus _newstatus;
         if (combinedMagicType == ElementType.Electric) _newstatus = EnemyStatus.Electrified;
         else if (combinedMagicType == ElementType.Fire) _newstatus = EnemyStatus.Burning;
-        else if (combinedMagicType == ElementType.Ice) _newstatus = EnemyStatus.Wet;
-        else _newstatus = EnemyStatus.Thinking;
+        else if (combinedMagicType == ElementType.Ice) _newstatus = EnemyStatus.Frozen;
+        else _newstatus = EnemyStatus.Nothing;
         return _newstatus;
     }
 
