@@ -3,12 +3,12 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
+    [SerializeField] private float attackRange = 1.2f;
 
-    [SerializeField] float enemySight = 5f;
-    [SerializeField] Transform target;
-    [SerializeField] float enemySpeed = 0.5f;
-    [SerializeField] float attackRange = 1.2f;
-    NavMeshAgent thisEnemyAI;
+    [SerializeField] private float enemySight = 5f;
+    [SerializeField] private float enemySpeed = 0.5f;
+    [SerializeField] private Transform target;
+    private NavMeshAgent thisEnemyAI;
 
     private void Awake()
     {
@@ -25,11 +25,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
-        float _targetDistance = Vector3.Distance(target.position, transform.position);
-        if (_targetDistance < enemySight && _targetDistance >= attackRange)
-        {
-            thisEnemyAI.SetDestination(target.position);
-        }
+        var _targetDistance = Vector3.Distance(target.position, transform.position);
+        if (_targetDistance < enemySight && _targetDistance >= attackRange) thisEnemyAI.SetDestination(target.position);
     }
-
 }

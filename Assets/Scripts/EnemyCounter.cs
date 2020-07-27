@@ -3,24 +3,23 @@ using UnityEngine;
 
 public class EnemyCounter : MonoBehaviour
 {
-
-
-    [SerializeField] SceneController sceneController;
-    [SerializeField] int enemyCount;
-    [SerializeField] RevealText revealText;
-    [SerializeField] RevealText hideText;
-
-    [SerializeField] Canvas sceneEndCanvas;
+    public Color ColorTint;
+    [SerializeField] private int enemyCount;
 
     public float FadeSpeed = 17.0F;
-    public int RolloverCharacterSpread = 10;
-    public Color ColorTint;
+    [SerializeField] private RevealText hideText;
+    [SerializeField] private RevealText revealText;
 
-    bool rollingShouldStart = true;
+    private bool rollingShouldStart = true;
+    public int RolloverCharacterSpread = 10;
+
+
+    [SerializeField] private SceneController sceneController;
+
+    [SerializeField] private Canvas sceneEndCanvas;
 
     private void Awake()
     {
-
         sceneEndCanvas.gameObject.SetActive(false);
 
         //textToDisplayAfterClearingLevel = GetComponent<TMP_Text>();
@@ -39,9 +38,8 @@ public class EnemyCounter : MonoBehaviour
         }
     }
 
-    IEnumerator LoadSceneEndCanvas()
+    private IEnumerator LoadSceneEndCanvas()
     {
-
         hideText.gameObject.SetActive(false);
         yield return new WaitForSeconds(2f);
         sceneEndCanvas.gameObject.SetActive(true);
@@ -51,9 +49,4 @@ public class EnemyCounter : MonoBehaviour
     {
         enemyCount--;
     }
-
-
-
-
-
 }

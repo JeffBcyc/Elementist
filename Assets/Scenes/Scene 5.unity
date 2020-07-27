@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.15649748, g: 0.25843683, b: 0.33166903, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -648,8 +648,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a0ad28a475d8514ba348a6523c9bae1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textToTrigger: {fileID: 2147405270}
   textToDisable: {fileID: 891332906}
+  textToTrigger: {fileID: 2147405270}
 --- !u!65 &85215218
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -797,6 +797,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &122484512 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3183590673980566565, guid: 9e1fe81104abce14fac95be14275a854,
+    type: 3}
+  m_PrefabInstance: {fileID: 3183590673603109911}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bffd1683e0596c459ceecba0e642af8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &125839868
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1487,8 +1499,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a0ad28a475d8514ba348a6523c9bae1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textToTrigger: {fileID: 891332906}
   textToDisable: {fileID: 0}
+  textToTrigger: {fileID: 891332906}
 --- !u!65 &255912903
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3136,10 +3148,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dbf5b850101dbd4b903144118329777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TextComponent: {fileID: 891332904}
-  FadeSpeed: 20
-  RolloverCharacterSpread: 15
   ColorTint: {r: 1, g: 1, b: 1, a: 1}
+  FadeSpeed: 20
+  m_TextComponent: {fileID: 891332904}
+  RolloverCharacterSpread: 15
 --- !u!4 &920848682 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2388854097072008338, guid: b5fe518d2c5f33645af98b994e1f149f,
@@ -3333,8 +3345,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a0ad28a475d8514ba348a6523c9bae1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textToTrigger: {fileID: 1481274853}
   textToDisable: {fileID: 2147405270}
+  textToTrigger: {fileID: 1481274853}
 --- !u!65 &1119455531
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3942,10 +3954,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dbf5b850101dbd4b903144118329777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TextComponent: {fileID: 1481274854}
-  FadeSpeed: 20
-  RolloverCharacterSpread: 15
   ColorTint: {r: 1, g: 1, b: 1, a: 1}
+  FadeSpeed: 20
+  m_TextComponent: {fileID: 1481274854}
+  RolloverCharacterSpread: 15
 --- !u!114 &1481274854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4371,14 +4383,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae0db60059096134f8fe58cf26537da5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneController: {fileID: 0}
-  enemyCount: 0
-  revealText: {fileID: 4548878853205723161}
-  hideText: {fileID: 1481274853}
-  sceneEndCanvas: {fileID: 4548878852219281658}
-  FadeSpeed: 20
-  RolloverCharacterSpread: 8
   ColorTint: {r: 1, g: 1, b: 1, a: 1}
+  enemyCount: 0
+  FadeSpeed: 20
+  hideText: {fileID: 1481274853}
+  revealText: {fileID: 4548878853205723161}
+  RolloverCharacterSpread: 8
+  sceneController: {fileID: 0}
+  sceneEndCanvas: {fileID: 4548878852219281658}
 --- !u!1 &1658289258
 GameObject:
   m_ObjectHideFlags: 0
@@ -5302,10 +5314,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dbf5b850101dbd4b903144118329777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TextComponent: {fileID: 2147405268}
-  FadeSpeed: 20
-  RolloverCharacterSpread: 15
   ColorTint: {r: 1, g: 1, b: 1, a: 1}
+  FadeSpeed: 20
+  m_TextComponent: {fileID: 2147405268}
+  RolloverCharacterSpread: 15
 --- !u!4 &4569300980907302 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5965789740277914853, guid: 2de8bf5b524cee24e9aafb7b03ad187f,
@@ -5818,10 +5830,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dbf5b850101dbd4b903144118329777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TextComponent: {fileID: 4548878853205723160}
-  FadeSpeed: 20
-  RolloverCharacterSpread: 15
   ColorTint: {r: 1, g: 1, b: 1, a: 1}
+  FadeSpeed: 20
+  m_TextComponent: {fileID: 4548878853205723160}
+  RolloverCharacterSpread: 15
 --- !u!222 &4548878853205723163
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6096,6 +6108,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2137390023}
     m_Modifications:
+    - target: {fileID: 1277940541426250, guid: 2de8bf5b524cee24e9aafb7b03ad187f, type: 3}
+      propertyPath: elementBag
+      value: 
+      objectReference: {fileID: 122484512}
     - target: {fileID: 1024098140874474939, guid: 2de8bf5b524cee24e9aafb7b03ad187f,
         type: 3}
       propertyPath: m_Mass

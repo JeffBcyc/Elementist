@@ -1,18 +1,15 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class ElementPickUp : MonoBehaviour
 {
-    [SerializeField] ElementType elementFromThisBook;
-    [SerializeField] ElementBag playerMagicCombo;
+    private Color color;
+    [SerializeField] private ElementType elementFromThisBook;
+    [SerializeField] private ElementBag playerMagicCombo;
 
-    Color color;
+    public ElementType ElementFromThisBook => elementFromThisBook;
 
-    public ElementType ElementFromThisBook
-    {
-        get { return elementFromThisBook; }
-    }
-
-    [System.Obsolete]
+    [Obsolete]
     private void Awake()
     {
         playerMagicCombo = FindObjectOfType<ElementBag>();
@@ -26,5 +23,4 @@ public class ElementPickUp : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
 }

@@ -1,12 +1,11 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TextTrigger : MonoBehaviour
 {
+    [SerializeField] private RevealText textToDisable;
 
     [SerializeField] private RevealText textToTrigger;
-    [SerializeField] private RevealText textToDisable;
-    
+
     private void OnTriggerEnter(Collider other)
     {
         if (!other.gameObject.CompareTag("Player")) return;
@@ -20,9 +19,7 @@ public class TextTrigger : MonoBehaviour
         {
             Debug.Log("nothing happens");
         }
+
         Destroy(gameObject);
-
     }
-
-    
 }

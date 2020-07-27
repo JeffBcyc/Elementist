@@ -3,117 +3,90 @@ using UnityEngine;
 
 public class ElementBag : MonoBehaviour
 {
+    private ParticleSystem _activeParticleSystem;
 
-    private ElementSlot[] elementSlots;
-    [SerializeField] float elmentDefaultDamage = 1f;
-    private int elementSlotLimit = 3;
-    private Dictionary<ElementType, float> damageBook = new Dictionary<ElementType, float>();
-    private MotionController player;
-    private ParticleSystem activeParticleSystem;
+    private ElementSlot[] _elementSlots;
+    [SerializeField] private float elementDefaultDamage = 1f;
 
 
-    // generate damagebook according to current elements in the bag
+    // generate damage book according to current elements in the bag
     // read access only
-    public Dictionary<ElementType, float> DamageBook
-    {
-        get { return damageBook; }
-    }
-
-
+    public Dictionary<ElementType, float> DamageBook { get; } = new Dictionary<ElementType, float>();
 
     private void Awake()
     {
-        elementSlots = FindObjectsOfType<ElementSlot>(); // find all elementSlots
+        _elementSlots = FindObjectsOfType<ElementSlot>(); // find all elementSlots
         //Array.Reverse(elementSlots);
-        player = FindObjectOfType<MotionController>();
-        ReadElements(elementSlots, elmentDefaultDamage); // add all element to the dict
+        FindObjectOfType<MotionController>();
+        ReadElements(_elementSlots, elementDefaultDamage); // add all element to the dict
     }
 
 
     // newer version uses simpler logic:
     // 1. if there is slot empty, fill in first found slot
     // 2. if all full, fill in the left most slot
-    public void FillInNewElement(ElementType _newElement)
+    public void FillInNewElement(ElementType newElement)
     {
-        int _emptyIndex = elementSlots.Length + 1;
-        for (int i = 0; i < elementSlots.Length; i++)
-        {
-            if (elementSlots[i].Element == ElementType.Empty)
+        var emptyIndex = _elementSlots.Length + 1;
+        for (var i = 0; i < _elementSlots.Length; i++)
+            if (_elementSlots[i].Element == ElementType.Empty)
             {
-                _emptyIndex = i;
+                emptyIndex = i;
                 break;
             }
-        }
+
         try
         {
-            elementSlots[_emptyIndex].Element = _newElement;
+            _elementSlots[emptyIndex].Element = newElement;
         }
         catch
         {
-            elementSlots[0].Element = _newElement;
+            _elementSlots[0].Element = newElement;
         }
-        ReadElements(elementSlots, elmentDefaultDamage);
+
+        ReadElements(_elementSlots, elementDefaultDamage);
     }
 
     // no more accumulating damage
-    private void ReadElements(ElementSlot[] _elementSlots, float _elementDamage)
+    private void ReadElements(ElementSlot[] elementSlots, float elementDamage)
     {
-        damageBook.Clear();
-        if (_elementSlots[0].Element == ElementType.Fire)
-        {
-            damageBook.Add(_elementSlots[0].Element, _elementDamage * 2);
-        }
+        DamageBook.Clear();
+        if (elementSlots[0].Element == ElementType.Fire)
+            DamageBook.Add(elementSlots[0].Element, elementDamage * 2);
         else
-        {
-            damageBook.Add(_elementSlots[0].Element, _elementDamage);
-        }
+            DamageBook.Add(elementSlots[0].Element, elementDamage);
     }
 
     public void RotateElementSequence()
     {
-        ElementType _lastElement = elementSlots[0].Element;
-        for (int i = 0; i < elementSlots.Length; i++)
-        {
-            if (i == (elementSlots.Length - 1))
-            {
-                elementSlots[i].Element = _lastElement;
-            }
+        var lastElement = _elementSlots[0].Element;
+        for (var i = 0; i < _elementSlots.Length; i++)
+            if (i == _elementSlots.Length - 1)
+                _elementSlots[i].Element = lastElement;
             else
-            {
-                elementSlots[i].Element = elementSlots[i + 1].Element;
-            }
-        }
-        ReadElements(elementSlots, elmentDefaultDamage);
+                _elementSlots[i].Element = _elementSlots[i + 1].Element;
+        ReadElements(_elementSlots, elementDefaultDamage);
     }
 
     public void BurnElement()
     {
-
-        for (int i = 0; i < elementSlots.Length; i++)
-        {
-            if (i == (elementSlots.Length - 1))
-            {
-                elementSlots[i].Element = ElementType.Empty;
-            }
+        for (var i = 0; i < _elementSlots.Length; i++)
+            if (i == _elementSlots.Length - 1)
+                _elementSlots[i].Element = ElementType.Empty;
             else
-            {
-                elementSlots[i].Element = elementSlots[i + 1].Element;
-            }
-        }
-        ReadElements(elementSlots, elmentDefaultDamage);
+                _elementSlots[i].Element = _elementSlots[i + 1].Element;
+        ReadElements(_elementSlots, elementDefaultDamage);
         //RotateElementSequence();
     }
 
     public bool LeadElementAvailable()
     {
-        return elementSlots[0].Element != ElementType.Empty;
+        return _elementSlots[0].Element != ElementType.Empty;
     }
 
     public ParticleSystem FirstSlotElement()
     {
-        activeParticleSystem = elementSlots[0].GetComponentInChildren<ParticleSystem>();
-        return activeParticleSystem;
+        _activeParticleSystem = _elementSlots[0].GetComponentInChildren<ParticleSystem>();
+        return _activeParticleSystem;
     }
-
-
 }

@@ -3,28 +3,28 @@ using UnityEngine;
 
 public class Lighting : MonoBehaviour
 {
+    public bool flashFlg;
+
+    public bool flashingFlg;
+    public float flashingOff;
+    public float flashingOffIntensity = 1;
+    public float flashingOffPower;
+    public float flashTimer = 0.3f;
+    public float keepOnTime;
+    public float keepTime;
 
     public float lighting = 1;
+
+    private bool lightKeepFlg;
+    private bool lightOffFlg;
     public Light lightPower;
-    public bool flashFlg = false;
-    public float flashTimer = 0.3f;
-
-    private bool lightKeepFlg = false;
-    public float revOnTime = 0;
-    public float keepOnTime = 0;
-    public float keepTime = 0;
-
-    public bool flashingFlg = false;
-    public float minLight = 0;
     public float maxLight = 1;
-    private bool lightOffFlg = false;
-    public float flashingOff = 0;
-    public float flashingOffPower = 0;
-    public float flashingOffIntensity = 1;
+    public float minLight;
+    public float revOnTime;
 
-    void Start()
+    private void Start()
     {
-        lightPower = this.GetComponent<Light>();
+        lightPower = GetComponent<Light>();
 
         flash();
         setRev();
@@ -32,9 +32,8 @@ public class Lighting : MonoBehaviour
         setFlashingOff();
     }
 
-    void Update()
+    private void Update()
     {
-
         if (flashingFlg)
         {
             if (lightOffFlg)
@@ -61,7 +60,7 @@ public class Lighting : MonoBehaviour
     }
 
 
-    IEnumerator flash()
+    private IEnumerator flash()
     {
         if (flashFlg)
         {
@@ -71,7 +70,7 @@ public class Lighting : MonoBehaviour
         }
     }
 
-    IEnumerator setRev()
+    private IEnumerator setRev()
     {
         if (revOnTime > 0)
         {
@@ -80,7 +79,7 @@ public class Lighting : MonoBehaviour
         }
     }
 
-    IEnumerator keepOn()
+    private IEnumerator keepOn()
     {
         if (keepOnTime > 0)
         {
@@ -89,7 +88,7 @@ public class Lighting : MonoBehaviour
         }
     }
 
-    IEnumerator setFlashingOff()
+    private IEnumerator setFlashingOff()
     {
         if (flashingOff > 0)
         {

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace TMPro
 {
     /// <summary>
-    /// Example of a Custom Character Input Validator to only allow phone number in the (800) 555-1212 format.
+    ///     Example of a Custom Character Input Validator to only allow phone number in the (800) 555-1212 format.
     /// </summary>
     [Serializable]
     //[CreateAssetMenu(fileName = "InputValidator - Phone Numbers.asset", menuName = "TextMeshPro/Input Validators/Phone Numbers")]
@@ -16,13 +16,12 @@ namespace TMPro
             Debug.Log("Trying to validate...");
 
             // Return unless the character is a valid digit
-            if (ch < '0' && ch > '9') return (char)0;
+            if (ch < '0' && ch > '9') return (char) 0;
 
-            int length = text.Length;
+            var length = text.Length;
 
             // Enforce Phone Number format for every character input.
-            for (int i = 0; i < length + 1; i++)
-            {
+            for (var i = 0; i < length + 1; i++)
                 switch (i)
                 {
                     case 0:
@@ -96,7 +95,6 @@ namespace TMPro
                         pos = 14;
                         break;
                 }
-            }
 
             return ch;
         }

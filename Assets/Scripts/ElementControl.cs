@@ -2,8 +2,7 @@
 
 public class ElementControl : MonoBehaviour
 {
-
-    ElementBag elementBag;
+    private ElementBag elementBag;
 
     private void Awake()
     {
@@ -12,10 +11,6 @@ public class ElementControl : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            elementBag.RotateElementSequence();
-        }
+        if (Input.GetKeyDown(KeyCode.Space)) elementBag.RotateElementSequence();
     }
-
 }

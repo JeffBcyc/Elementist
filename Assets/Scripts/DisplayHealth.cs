@@ -4,9 +4,9 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Text))]
 public class DisplayHealth : MonoBehaviour
 {
+    private string currentHealth, maxHealth;
 
-    [SerializeField] HealthBar healthBar;
-    string currentHealth, maxHealth;
+    [SerializeField] private HealthBar healthBar;
 
 
     private void Update()
@@ -15,5 +15,4 @@ public class DisplayHealth : MonoBehaviour
         maxHealth = healthBar.GetComponent<Slider>().maxValue.ToString();
         gameObject.GetComponent<Text>().text = currentHealth + "/" + maxHealth;
     }
-
 }

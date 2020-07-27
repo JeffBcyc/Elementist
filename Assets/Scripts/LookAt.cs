@@ -1,20 +1,21 @@
 ﻿// LookAt.cs
+
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 public class LookAt : MonoBehaviour
 {
-    public Transform head = null;
-    public Vector3 lookAtTargetPosition;
+    private Animator animator;
+    public Transform head;
     public float lookAtCoolTime = 0.2f;
     public float lookAtHeatTime = 0.2f;
-    public bool looking = true;
 
     private Vector3 lookAtPosition;
-    private Animator animator;
-    private float lookAtWeight = 0.0f;
+    public Vector3 lookAtTargetPosition;
+    private float lookAtWeight;
+    public bool looking = true;
 
-    void Start()
+    private void Start()
     {
         if (!head)
         {
@@ -22,23 +23,24 @@ public class LookAt : MonoBehaviour
             enabled = false;
             return;
         }
+
         animator = GetComponent<Animator>();
         lookAtTargetPosition = head.position + transform.forward;
         lookAtPosition = lookAtTargetPosition;
     }
 
-    void OnAnimatorIK()
+    private void OnAnimatorIK()
     {
         lookAtTargetPosition.y = head.position.y;
-        float lookAtTargetWeight = looking ? 1.0f : 0.0f;
+        var lookAtTargetWeight = looking ? 1.0f : 0.0f;
 
-        Vector3 curDir = lookAtPosition - head.position;
-        Vector3 futDir = lookAtTargetPosition - head.position;
+        var curDir = lookAtPosition - head.position;
+        var futDir = lookAtTargetPosition - head.position;
 
         curDir = Vector3.RotateTowards(curDir, futDir, 6.28f * Time.deltaTime, float.PositiveInfinity);
         lookAtPosition = head.position + curDir;
 
-        float blendTime = lookAtTargetWeight > lookAtWeight ? lookAtHeatTime : lookAtCoolTime;
+        var blendTime = lookAtTargetWeight > lookAtWeight ? lookAtHeatTime : lookAtCoolTime;
         lookAtWeight = Mathf.MoveTowards(lookAtWeight, lookAtTargetWeight, Time.deltaTime / blendTime);
         animator.SetLookAtWeight(lookAtWeight, 0.2f, 0.5f, 0.7f, 0.5f);
         animator.SetLookAtPosition(lookAtPosition);

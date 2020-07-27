@@ -2,30 +2,19 @@
 
 public class EnemyHealth : MonoBehaviour
 {
+    private ElementBall damage;
+    [SerializeField] private ElementType dropElement;
 
-    [SerializeField] float enemyHealth = 2;
-    [SerializeField] ElementPickUp[] elementToSpawnAfterDeath;
-    [SerializeField] EnemyStatus enemyStatus;
-    [SerializeField] HealthBar healthBar;
-    [SerializeField] ElementType dropElement;
-    [SerializeField] EnemyCounter enemyCounter;
-    [SerializeField] TextMesh textMesh;
+    private ElementBag elementBag;
+    [SerializeField] private ElementPickUp[] elementToSpawnAfterDeath;
+    [SerializeField] private EnemyCounter enemyCounter;
 
-    public float CurrentHealth
-    {
-        get { return enemyHealth; }
-    }
+    [SerializeField] private float enemyHealth = 2;
+    [SerializeField] private EnemyStatus enemyStatus;
+    [SerializeField] private HealthBar healthBar;
+    [SerializeField] private TextMesh textMesh;
 
-    private enum EnemyStatus
-    {
-        Frozen,
-        Burning,
-        Electrified,
-        Nothing
-    }
-
-    ElementBag elementBag;
-    ElementBall damage;
+    public float CurrentHealth => enemyHealth;
 
 
     private void Start()
@@ -40,17 +29,14 @@ public class EnemyHealth : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "MagicBall")
-        {
-            ProcessDamage(other);
-        }
+        if (other.gameObject.tag == "MagicBall") ProcessDamage(other);
     }
 
 
     private void ProcessDamage(Collider other)
     {
         damage = other.GetComponent<ElementBall>();
-        float _modifiedDamage = ModifyDamageByStatus(damage.CombinedMagicDamage);
+        var _modifiedDamage = ModifyDamageByStatus(damage.CombinedMagicDamage);
         enemyHealth -= _modifiedDamage;
         healthBar.SetHealth(enemyHealth);
 
@@ -69,11 +55,9 @@ public class EnemyHealth : MonoBehaviour
 
     private float ModifyDamageByStatus(float rawDamage)
     {
-        float modifiedDamage = rawDamage;
+        var modifiedDamage = rawDamage;
 
         if (enemyStatus == EnemyStatus.Electrified)
-        {
-
             switch (damage.CombinedMagicType)
             {
                 case ElementType.Ice:
@@ -83,9 +67,7 @@ public class EnemyHealth : MonoBehaviour
                     modifiedDamage = damage.CombinedMagicDamage * 2;
                     break;
             }
-        }
         else if (enemyStatus == EnemyStatus.Burning)
-        {
             switch (damage.CombinedMagicType)
             {
                 case ElementType.Electric:
@@ -95,9 +77,7 @@ public class EnemyHealth : MonoBehaviour
                     modifiedDamage = damage.CombinedMagicDamage / 2;
                     break;
             }
-        }
         else if (enemyStatus == EnemyStatus.Frozen)
-        {
             switch (damage.CombinedMagicType)
             {
                 case ElementType.Fire:
@@ -107,7 +87,6 @@ public class EnemyHealth : MonoBehaviour
                     modifiedDamage = damage.CombinedMagicDamage * 2;
                     break;
             }
-        }
 
         return modifiedDamage;
     }
@@ -124,15 +103,19 @@ public class EnemyHealth : MonoBehaviour
 
     private void SpawnElement()
     {
-        foreach (ElementPickUp item in elementToSpawnAfterDeath)
-        {
+        foreach (var item in elementToSpawnAfterDeath)
             if (item.ElementFromThisBook == dropElement)
             {
                 Instantiate(item, transform.position, Quaternion.identity);
                 break;
             }
-        }
     }
 
-
+    private enum EnemyStatus
+    {
+        Frozen,
+        Burning,
+        Electrified,
+        Nothing
+    }
 }

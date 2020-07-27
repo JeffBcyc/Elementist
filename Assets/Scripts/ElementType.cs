@@ -5,5 +5,3 @@
     Electric = 2,
     Ice = 3
 }
-
-

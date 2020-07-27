@@ -5,20 +5,20 @@ using UnityEngine.UI;
 
 public class ElementImages : MonoBehaviour
 {
+    private Image _image;
 
-    [SerializeField] ElementSlot thisSlot;
-    [SerializeField] ElementBag elementBag;
-    [SerializeField] Sprite[] elementSprites;
-    TMP_Text damageAmount;
+    private ElementType _magic;
+    private TMP_Text damageAmount;
+    [SerializeField] private ElementBag elementBag;
+    [SerializeField] private Sprite[] elementSprites;
 
-    ElementType _magic;
-    Image _image;
+    [SerializeField] private ElementSlot thisSlot;
 
 
     public ElementSlot ThisSlot
     {
-        get { return thisSlot; }
-        set { thisSlot = value; }
+        get => thisSlot;
+        set => thisSlot = value;
     }
 
     private void Start()
@@ -33,20 +33,14 @@ public class ElementImages : MonoBehaviour
         _magic = thisSlot.Element;
 
         if (_magic == ElementType.Fire)
-        {
             damageAmount.text = "2";
-        }
         else if (_magic == ElementType.Empty)
-        {
             damageAmount.text = "0";
-        }
         else
-        {
             damageAmount.text = "1";
-        }
 
-        string[] arrayNameofSprite = Array.ConvertAll(elementSprites, g => g.name);
-        int a = Array.IndexOf(arrayNameofSprite, _magic.ToString());
+        var arrayNameofSprite = Array.ConvertAll(elementSprites, g => g.name);
+        var a = Array.IndexOf(arrayNameofSprite, _magic.ToString());
         //print(thisSlot.name + ":" + a);
         try
         {
@@ -56,7 +50,5 @@ public class ElementImages : MonoBehaviour
         {
             Debug.Log(ThisSlot.name + " is empty, no picture to display");
         }
-
     }
-
 }
