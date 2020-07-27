@@ -1,28 +1,33 @@
 ﻿// ClickToMove.cs
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(ElementBall))]
+[RequireComponent(typeof(ElementBag))]
 [RequireComponent(typeof(NavMeshAgent))]
-public class ClicktoMoveandShoot : MonoBehaviour
+public class PlayerControl : MonoBehaviour
 {
-    RaycastHit hitInfo = new RaycastHit();
-    NavMeshAgent agent;
+    private RaycastHit _hitInfo;
+    private NavMeshAgent _agent;
+    public ElementBag elementBag;
+    
+    
+    [SerializeField] private float magicSpeed = 10f;
+    [SerializeField] private float magicLifetime = 2f;
+    [SerializeField] private ElementBall elementBall;
+    private Animator _animator;
 
-    ElementBag elementBag;
-    [SerializeField] float magicSpeed = 10f;
-    [SerializeField] float magicLifetime = 2f;
-    [SerializeField] ElementBall elementBall;
-    Animator animator;
-
-    private float agentSpeed;
+    private float _agentSpeed;
+    private static readonly int SpeedPercent = Animator.StringToHash("speedPercent");
 
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+        _agent = GetComponent<NavMeshAgent>();
         elementBag = FindObjectOfType<ElementBag>();
 
-        animator = GetComponent<Animator>();
+        _animator = GetComponent<Animator>();
 
     }
 
@@ -31,20 +36,20 @@ public class ClicktoMoveandShoot : MonoBehaviour
     void Update()
     {
 
-        float speedPercent = agent.velocity.magnitude / agent.speed;
-        animator.SetFloat("speedPercent", speedPercent, 0.1f, Time.deltaTime);
+        float speedPercent = _agent.velocity.magnitude / _agent.speed;
+        _animator.SetFloat(SpeedPercent, speedPercent, 0.1f, Time.deltaTime);
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray.origin, ray.direction, out hitInfo))
+        if (Physics.Raycast(ray.origin, ray.direction, out _hitInfo))
         {
             if (Input.GetMouseButtonDown(1)) // right mouse
             {
-                agent.destination = hitInfo.point;
+                _agent.destination = _hitInfo.point;
             }
             else if (Input.GetMouseButtonDown(0)) // left mouse
             {
-                print(hitInfo.point);
-                print(hitInfo.collider.name);
+                print(_hitInfo.point);
+                print(_hitInfo.collider.name);
 
                 ElementBall _magic;
                 Vector3 direction = StopMovementAndGetFaceDirection();
@@ -61,7 +66,7 @@ public class ClicktoMoveandShoot : MonoBehaviour
 
             if (speedPercent == 0)
             {
-                animator.SetFloat("speedPercent", 0f);
+                _animator.SetFloat("speedPercent", 0f);
             }
 
         }
@@ -84,11 +89,11 @@ public class ClicktoMoveandShoot : MonoBehaviour
 
     private Vector3 StopMovementAndGetFaceDirection()
     {
-        Vector3 direction = (hitInfo.point - transform.position).normalized;
+        Vector3 direction = (_hitInfo.point - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 1f);
-        agent.isStopped = true;
-        agent.ResetPath();
+        _agent.isStopped = true;
+        _agent.ResetPath();
         return direction;
     }
 

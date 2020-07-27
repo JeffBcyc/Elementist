@@ -3,7 +3,7 @@
 public class Billboard : MonoBehaviour
 {
 
-    [SerializeField] Transform cam;
+    [SerializeField] private Transform cam;
 
     private void LateUpdate()
     {
